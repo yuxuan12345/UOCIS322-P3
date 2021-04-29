@@ -65,6 +65,12 @@ The `tests` directory contains a test suite for the `src` package. There's a `ru
 
 * If `credentials.ini` is not submitted or the repo is not found, 0 will be assigned.
 
+* EXTRA CREDIT:
+	* Remove (strikethrough) the words that are found from the word list at the top.
+	
+	* No HTML or response text in your JavaScript and Flask app.
+	 
+
 ## Credits
 
 Michal Young, Ram Durairajan, Steven Walton, Joe Istas.
