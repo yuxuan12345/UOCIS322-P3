@@ -73,15 +73,55 @@
          <br />
          <div class="row">
             <div class="col-xs-6 text-center">
-               <form id="entry" method="POST" action="/_check">
+               <form id="entry">
                   <label for="attempt">Word:</label>
                   <input id="attempt" name="attempt" type="text" width="15"
                      autocomplete="off"  autofocus />
-                  <input type="submit" name="try" />
                </form>
             </div>
          </div>
          <br />
+		 <p id="response"> </p>
+		 <p id="matched"> </p>
+		 <p id="warning"> </p>
+		 <p id="success"> </p>
+     	 <script>
+            $("#attempt").keyup(function(event) {
+               var txt = $("#attempt").val();
+               var keycode = event.which;
+               var letter = String.fromCharCode(keycode);
+
+               if (! "ABCDEFGHIJKLMNOPQRSTUVWXYZ".includes(letter)) { return }
+
+               $.getJSON( "/_check", { text: txt },
+                          function(data) {
+                            rsval = data.result.re;
+                            if (rsval == 1 || rsval == 5) {
+							   $("#response").html("<h2>You found</h2>");
+							   $("#matched").append(" " + txt);
+							   $("#warning").html("");
+                               $("#attempt").val("");
+							   if (rsval == 5){
+							      $("#success").html("<h1>That was awesome!</h1><p>Let's <a href='/index'>do it again</a>.</p>");
+                                  $("#attempt").val("");
+								}
+                            }else if (rsval == 2) {
+							   $("#warning").html("You already found "+txt);
+							   $("#warning").css("color", "red"); 
+                               $("#attempt").val("");
+                            }else if (rsval == 3) {
+							   $("#warning").html(txt+" isn't in the list of words");
+						       $("#warning").css("color", "red");
+                            }else if (rsval == 4) {
+							   $("#warning").html(txt+" can't be made from the letters");
+						       $("#warning").css("color", "red");
+                               $("#attempt").val("");
+							}
+                           }
+                       );
+               });
+		 </script>
+
          {% if session.matches|length is not equalto 0  %}
          <h2>You found </h2>
          <p id="results">
