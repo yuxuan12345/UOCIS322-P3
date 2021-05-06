@@ -1,144 +1,142 @@
 <!doctype html>
 <html>
-   <head>
-      <!-- Using Bootstrap, so that we're `responsive`! -->
-      <!-- Bootstrap requires the following three meta tags to fully function -->
-      <meta charset="utf-8">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <!-- Javascript and Cascading Style Sheets (css) libraries -->
-      <!-- mostly from content delivery networks                 -->
-      <!-- jquery; CDN load is usually quick because it's likely cached -->
-      <script type="text/javascript"
-         src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-      <!-- 12 column grid rearranges itself for smaller screens or windows. -->
-      <!-- This project is using an older version, make sure to check out newer versions! -->
-      <!-- http://getbootstrap.com/getting-started/  -->
-      <!-- Compiled and minified CSS -->
-      <link rel="stylesheet"
-         href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
-         integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
-         crossorigin="anonymous">
-      <!-- Compiled and minified JavaScript -->
-      <script
-         src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
-         integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
-         crossorigin="anonymous"></script>
-      <!-- Let's set our title! -->
-      <title>Vocabulary Anagram</title>
-      <!-- Our own css file.  Note how we can link directly here and not -->
-      <!-- write any routing code in the Flask application. -->
-      <link rel="stylesheet" href="/static/jumble.css" />
-   </head>
-   <body>
-      <div class="container">
-         <div class="row">
+
+<head>
+    <!-- Using Bootstrap, so that we're `responsive`! -->
+    <!-- Bootstrap requires the following three meta tags to fully function -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Javascript and Cascading Style Sheets (css) libraries -->
+    <!-- mostly from content delivery networks                 -->
+    <!-- jquery; CDN load is usually quick because it's likely cached -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- 12 column grid rearranges itself for smaller screens or windows. -->
+    <!-- This project is using an older version, make sure to check out newer versions! -->
+    <!-- http://getbootstrap.com/getting-started/  -->
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+        integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+        integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+        crossorigin="anonymous"></script>
+    <!-- Let's set our title! -->
+    <title>Vocabulary Anagram</title>
+    <!-- Our own css file.  Note how we can link directly here and not -->
+    <!-- write any routing code in the Flask application. -->
+    <link rel="stylesheet" href="/static/jumble.css" />
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
             <div class="col-xs-6 text-center">
-               <h1>Words</h1>
+                <h1>Words</h1>
             </div>
-         </div>
-         <!-- Vocabularly words layed out in 6 columns;
+        </div>
+        <!-- Vocabularly words layed out in 6 columns;
              bootstrap may collapse to fewer columns and
              more rows if the window is narrow.
             -->
-         <div class="row">
+        <div class="row">
             {% for word in g.vocab %}
             <div class="col-xs-2 text-center"> {{ word }} </div>
             {% if loop.index is divisibleby 3 %}
-         </div>
-         <!-- row -->
-         <div class="row">
+        </div>
+        <!-- row -->
+        <div class="row">
             {% endif %}
             {% endfor %}
-         </div>
-         <!-- row -->
-         <br />
-         <div class="row">
+        </div>
+        <!-- row -->
+        <br />
+        <div class="row">
             <div class="col-xs-6 text-center">
-               Use letters from
+                Use letters from
             </div>
-         </div>
-         <div class="row">
+        </div>
+        <div class="row">
             <div class="col-xs-6 text-center lead">
-               <strong>{{ session.jumble }}</strong>
+                <strong>{{ session.jumble }}</strong>
             </div>
-         </div>
-         <div class="row">
+        </div>
+        <div class="row">
             <div class="col-xs-6 text-center">
-               to spell {{session.target_count}} words from the list.
+                to spell {{session.target_count}} words from the list.
             </div>
             <!-- col -->
-         </div>
-         <!-- row -->
-         <br />
-         <div class="row">
+        </div>
+        <!-- row -->
+        <br />
+        <div class="row">
             <div class="col-xs-6 text-center">
-               <form id="entry">
-                  <label for="attempt">Word:</label>
-                  <input id="attempt" name="attempt" type="text" width="15"
-                     autocomplete="off"  autofocus />
-               </form>
+                <form id="entry">
+                    <label for="attempt">Word:</label>
+                    <input id="attempt" name="attempt" type="text" width="15" autocomplete="off" autofocus />
+                </form>
             </div>
-         </div>
-         <br />
-		 <p id="response"> </p>
-		 <p id="matched"> </p>
-		 <p id="warning"> </p>
-		 <p id="success"> </p>
-     	 <script>
-            $("#attempt").keyup(function(event) {
-               var txt = $("#attempt").val();
-               var keycode = event.which;
-               var letter = String.fromCharCode(keycode);
+        </div>
+        <br />
+        <p id="response"> </p>
+        <p id="matched"> </p>
+        <p id="warning"> </p>
+        <p id="success"> </p>
+        <script>
+            $("#attempt").keyup(function (event) {
+                var txt = $("#attempt").val();
+                var keycode = event.which;
+                var letter = String.fromCharCode(keycode);
 
-               if (! "ABCDEFGHIJKLMNOPQRSTUVWXYZ".includes(letter)) { return }
+                if (! "ABCDEFGHIJKLMNOPQRSTUVWXYZ".includes(letter)) {return }
 
-               $.getJSON( "/_check", { text: txt },
-                          function(data) {
-                            rsval = data.result.re;
-                            if (rsval == 1 || rsval == 5) {
-							   $("#response").html("<h2>You found</h2>");
-							   $("#matched").append(" " + txt);
-							   $("#warning").html("");
-                               $("#attempt").val("");
-							   if (rsval == 5){
-							      $("#success").html("<h1>That was awesome!</h1><p>Let's <a href='/index'>do it again</a>.</p>");
-                                  $("#attempt").val("");
-								}
-                            }else if (rsval == 2) {
-							   $("#warning").html("You already found "+txt);
-							   $("#warning").css("color", "red"); 
-                               $("#attempt").val("");
-                            }else if (rsval == 3) {
-							   $("#warning").html(txt+" isn't in the list of words");
-						       $("#warning").css("color", "red");
-                            }else if (rsval == 4) {
-							   $("#warning").html(txt+" can't be made from the letters");
-						       $("#warning").css("color", "red");
-                               $("#attempt").val("");
-							}
-                           }
-                       );
-               });
-		 </script>
+                $.getJSON("/_check", {text: txt},
+                    function (data) {
+                        rsval = data.result.re;
+                        if (rsval == 1 || rsval == 5) {
+                            $("#response").html("<h2>You found</h2>");
+                            $("#matched").append(" " + txt);
+                            $("#warning").html("");
+                            $("#attempt").val("");
+                            if (rsval == 5) {
+                                $("#success").html("<h1>That was awesome!</h1><p>Let's <a href='/index'>do it again</a>.</p>");
+                                $("#attempt").val("");
+                            }
+                        } else if (rsval == 2) {
+                            $("#warning").html("You already found " + txt);
+                            $("#warning").css("color", "red");
+                            $("#attempt").val("");
+                        } else if (rsval == 3) {
+                            $("#warning").html(txt + " isn't in the list of words");
+                            $("#warning").css("color", "red");
+                        } else if (rsval == 4) {
+                            $("#warning").html(txt + " can't be made from the letters");
+                            $("#warning").css("color", "red");
+                            $("#attempt").val("");
+                        }
+                    }
+                );
+            });
+        </script>
 
-         {% if session.matches|length is not equalto 0  %}
-         <h2>You found </h2>
-         <p id="results">
+        {% if session.matches|length is not equalto 0 %}
+        <h2>You found </h2>
+        <p id="results">
             {% for match in session.matches %}
             {{ match }}
             {% endfor %}
-         </p>
-         {% endif %}
-         {% with messages = get_flashed_messages() %}
-         {% if messages %}
-         <!-- Mismatch, already found, etc. "flashed" from Python -->
-         {% for message in messages %}
-         <p class="message">{{ message }}</p>
-         {% endfor %}
-         {% endif %}
-         {% endwith %}
-      </div>
-      <!-- container -->
-   </body>
+        </p>
+        {% endif %}
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <!-- Mismatch, already found, etc. "flashed" from Python -->
+        {% for message in messages %}
+        <p class="message">{{ message }}</p>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </div>
+    <!-- container -->
+</body>
+
 </html>
